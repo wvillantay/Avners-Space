@@ -1,5 +1,3 @@
-from re import X
-from tkinter import Y
 from PIL import Image, ImageFilter, ImageEnhance
 import random
 import os

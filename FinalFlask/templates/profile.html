@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ user.name }}'s Profile</title>
+    <script>
+    function applyFilter() {
+        var filter = document.getElementById("filter-dropdown").value;
+        var url = new URL(window.location.href);
+        url.searchParams.set("filter", filter);
+        window.location.href = url;
+    }
+    </script>
+</head>
+<body>
+    <h1>{{ user.name }}'s Profile</h1>
+    <h1>{{ filter_value }}'s filter</h1>
+    
+    <img id="profile-picture" src="{{ url_for('static', filename='images/' + user.profile_picture) }}" alt="Profile Picture" width="300">
+    
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Age:</strong> {{ user.age }}</p>
+    <p><strong>Location:</strong> {{ user.location }}</p>
+    <p><strong>Interests:</strong></p>
+    <ul>
+        {% for interest in user.interests %}
+        <li>{{ interest }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h3>Background Music</h3>
+    
+    <audio controls>
+        <source src="{{ user.background_music }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <h3>Filter Profile Picture</h3>
+
+    <select id="filter-dropdown" onchange="applyFilter()">
+        <option value="none">No Filter</option>
+        <option value="sepia">Sepia</option>
+        <option value="negative">Negative</option>
+        <option value="grayscale">Grayscale</option>
+        <option value="thumbnail">Thumbnail</option>
+    </select>
+
+    <h3>Recent Comments</h3>
+    
+    <ul>
+        {% for comment in comments %}
+        <li>{{ comment }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,3 +1,5 @@
+from re import X
+from tkinter import Y
 from PIL import Image, ImageFilter, ImageEnhance
 import random
 import os
@@ -6,8 +8,24 @@ import cv2
 from flask import Flask, render_template, flash, redirect, url_for, Response, request
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
-from wtforms import FileField
+from wtforms import FileField, SelectField
 from wtforms.validators import DataRequired
+import base64
+import io
+
+#collection of Image_Filters
+def apply_image_filter(img, filter_name):
+    if filter_name == 'negative':
+        img = negative_filter(img)
+    elif filter_name == 'grayscale':
+        img = grayscale_filter(img)
+    elif filter_name == 'mosaic':
+        img = mosaic_filter(img)
+    elif filter_name == 'sketch':
+        img = sketch_filter(img)
+    elif filter_name == 'sobel':
+        img = sobel_filter(img)
+    return img
 
 #Profile image editing
 def negative_filter(img):
@@ -21,7 +39,7 @@ def grayscale_filter(img):
     new_img.putdata(pix_changes)
     return new_img
 
-def mosaic_filtert(img):
+def mosaic_filter(img):
     small_img = img.resize((50,50))
     new_img = small_img.resize(img.size, Image.NEAREST)
     return new_img
@@ -64,26 +82,28 @@ bootstrap = Bootstrap5(app)
 
 #user img
 class User_image(FlaskForm):
-    user_img = FileField()
+    user_img = FileField(validators=[DataRequired()])
+    filter = SelectField('Filter', choices =[('negative', 'Negative Filter'), ('grayscale', 'Grayscale Filter'),
+                                            ('mosaic', 'Mosaic Filter'), ('sketch', 'Sketch Filter'),
+                                            ('sobel', 'Sobel Filter')], validators=[DataRequired()])
 
 @app.route('/',methods=['POST','GET'])
 def text_page():
     form = User_image()
-    
+
     if form.validate_on_submit():
-        filename = (form.file.data.filename)
-        form.file.data.save('/' + filename)
-        return redirect(url_for('text_page'))
+        image_file = form.user_img.data
+        image = Image.open(image_file)
+        filter_name = form.filter.data
 
-    return render_template('profile_imge.html', form=form)
+        # Apply the selected filter to the image
+        processed_image = apply_image_filter(image, filter_name)
 
+        # Convert the processed image to base64 string for display
+        buffered = io.BytesIO()
+        processed_image.save(buffered, format='JPEG')
+        encoded_image = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
-    #if request.method == "POST":
-    #   image = request.files.get('img')
-    #    image = request.form['img']
-    #    print(image)
-    #    return "yo!"
-    #else:
-    #     return render_template('profile_imge.html')
+        return render_template('profile_image.html', form=form, image_data=encoded_image)
 
-
+    return render_template('profile_image.html', form=form)

@@ -1,0 +1,34 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Prifile Image</title>
+    {{ bootstrap.load_css() }}
+</head>
+<body>
+    <h1>Upload Image</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <input type="file" name="user_img" required>
+        <br><br>
+        <label>Choose a filter:</label>
+        <select name="filter">
+            <option value="negative">Negative Filter</option>
+            <option value="grayscale">Grayscale Filter</option>
+            <option value="mosaic">Mosaic Filter</option>
+            <option value="sketch">Sketch Filter</option>
+            <option value="sobel">Sobel Filter</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Apply Filter">
+    </form>
+
+    {% if image_data %}
+    <br><br>
+    <h2>Processed Image:</h2>
+    <img src="data:image/jpeg;base64,{{ image_data }}" width="400" height="400">
+    {% endif %}
+</body>
+</html>

@@ -1,3 +1,4 @@
+#localhost:5000/      used when wanting to ssee the website
 from flask import Flask, render_template, request
 from PIL import Image
 

@@ -2,6 +2,26 @@
 <html>
 <head>
     <title>{{ user.name }}'s Profile</title>
+    <style>
+        h0{
+            color:white;
+            margin:0px;
+            background-color: blue;
+        }
+        h1 {
+            color:white;
+            text-align: center;
+            margin:0px;
+            background-color:blue;
+        }
+        h2{
+            color:white;
+            text-align:center;
+            margin:0px;
+            background-color: lightblue;
+        }
+    </style>
+    <link href="style.css" rel="stylesheet" type="text/css11">
     <script>
     function applyFilter() {
         var filter = document.getElementById("filter-dropdown").value;
@@ -10,10 +30,12 @@
         window.location.href = url;
     }
     </script>
+    
 </head>
 <body>
+    <h0>Avner-Space.com| Home| Sign out</h0>
     <h1>{{ user.name }}'s Profile</h1>
-    <h1>{{ filter_value }}'s filter</h1>
+    <h2>{{ filter_value }}'s filter</h2>
     
     <img id="profile-picture" src="{{ url_for('static', filename='images/' + user.profile_picture) }}" alt="Profile Picture" width="300">
     

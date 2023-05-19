@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>{{ user.name }}'s Profile</title>
+    <!-- CSS and html implemented for the website -->
     <style>
         h0{
             color:white;
@@ -52,9 +53,9 @@
     <h3>Background Music</h3>
     
     <audio controls>
-        <source src="{{ user.background_music }}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+        <source src="{{ url_for('static', filename='music/music.mp3' ) }}" type="audio/mpeg">
+        Your browser does not support the audio tag.
+      </audio>
     
     <h3>Filter Profile Picture</h3>
 

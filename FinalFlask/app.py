@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request
 from PIL import Image
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
 
 avner = {
     'name': 'Avner Biblars',
@@ -10,6 +10,16 @@ avner = {
     'location': 'New York, NY',
     'interests': ['Music', 'Movies', 'Sports'],
     'profile_picture': 'avner.jpg',
+    
+    'background_music': 'music.mp3'
+}
+william = {
+    'name': 'William Villantay',
+    'age': 28,
+    'location': 'California, CA',
+    'interests': ['Games', 'Movies', 'Sleep'],
+    'profile_picture': 'william.jpg',
+    
     'background_music': 'music.mp3'
 }
 
@@ -19,12 +29,12 @@ comments = []
 
 @app.route('/')
 def index():
-    return render_template('index.html', avner=avner, comments=comments)
+    return render_template('index.html', william=william, comments=comments)
 
 
 @app.route('/profile')
 def profile():
-    profile = 'avner.jpg'
+    profile = 'avner.png'
     image = Image.open('static/images/' + profile)
     filter_value = request.args.get('filter', 'none')
     print(filter_value)
@@ -46,6 +56,7 @@ def profile():
                     b = 255
                 sepia.putpixel((x, y), (tr, tg, tb))
         image = sepia
+        image.save('static/images/' + 'avner.jpg')
 
     elif filter_value == "negative":
         image = image.convert("RGB")
@@ -57,15 +68,17 @@ def profile():
                 negative.putpixel(
                     (x, y), (255 - r, 255 - g, 255 - b))
         image = negative
+        image.save('static/images/' + 'avner.jpg')
     elif filter_value == "grayscale":
         converted_image = image.convert("L")
         image = converted_image
-        image.save('static/images/' + 'temp.png')
+        image.save('static/images/' + 'avner.png')
     elif filter_value == "thumbnail":
         image.thumbnail((100, 100))
+        image.save('static/images/' + 'avner.jpg')
     else:
         filter_value = "none"
-    image.save('static/images/' + 'temp.jpg')
+    
     return render_template('profile.html', user=avner, comments=comments, filter_value=filter_value)
 
 
@@ -80,7 +93,7 @@ def upload_background():
 @app.route('/upload_picture', methods=['POST'])
 def upload_picture():
     file = request.files['file']
-    filename = 'avner.jpg'
+    filename = 'william.jpg'
     file.save('static/images/' + filename)
     return 'success'
 

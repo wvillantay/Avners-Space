@@ -6,18 +6,16 @@
 <body>
     <h1>Welcome to our My Website</h1>
     
-    <h2>{{ avner.name }}'s Profile</h2>
-    
-    <img src="{{ url_for('static', filename='images/' + avner.profile_picture) }}" alt="Profile Picture" width="300">
+    <img src="{{ url_for('static', filename='images/' + william.profile_picture) }}" alt="Profile Picture" width="300">
     <!-- button for edit profile  -->
     <br><button type="button" onclick="window.location.href='profile'">Edit Profile</button>
     
-    <p><strong>Name:</strong> {{ avner.name }}</p>
-    <p><strong>Age:</strong> {{ avner.age }}</p>
-    <p><strong>Location:</strong> {{ avner.location }}</p>
+    <p><strong>Name:</strong> {{william.name}}</p>
+    <p><strong>Age:</strong> {{ william.age }}</p>
+    <p><strong>Location:</strong> {{ william.location }}</p>
     <p><strong>Interests:</strong></p>
     <ul>
-        {% for interest in avner.interests %}
+        {% for interest in william.interests %}
         <li>{{ interest }}</li>
         {% endfor %}
     </ul>
@@ -25,7 +23,7 @@
     <h3>Choose Your Background Music</h3>
     
     <audio controls>
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="{{ url_for('static', filename='music/music.mp3' ) }}" type="audio/mpeg">
   Your browser does not support the audio tag.
 </audio>
 

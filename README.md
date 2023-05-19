@@ -15,6 +15,7 @@ Date: 5/18/2023
 
 Process of Installation:
 -  Download and install python
+-  install Tk package 
 -  Have a virtual enviroment
 -  run code with python (file name)
 

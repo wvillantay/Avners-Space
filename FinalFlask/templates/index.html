@@ -5,10 +5,10 @@
 </head>
 <body>
     <h1>Welcome to our My Website</h1>
-    
+    <!-- this is your own profile -->
     <img src="{{ url_for('static', filename='images/' + william.profile_picture) }}" alt="Profile Picture" width="300">
     <!-- button for edit profile  -->
-    <br><button type="button" onclick="window.location.href='profile'">Edit Profile</button>
+    <br><button type="button" onclick="window.location.href='profile'">Join Avners Profile</button>
     
     <p><strong>Name:</strong> {{william.name}}</p>
     <p><strong>Age:</strong> {{ william.age }}</p>
@@ -33,7 +33,7 @@
         Your browser does not support the audio tag.
     </audio>
 {% endfor %}
-    
+
     <h3>Upload a Background Image</h3>
     
     <form action="{{ url_for('upload_background') }}" method="post" enctype="multipart/form-data">

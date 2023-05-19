@@ -22,11 +22,17 @@
     
     <h3>Choose Your Background Music</h3>
     
-    <audio controls>
+    <!-- <audio controls>
   <source src="{{ url_for('static', filename='music/music.mp3' ) }}" type="audio/mpeg">
   Your browser does not support the audio tag.
-</audio>
+</audio> -->
 
+{% for music_file in musics %}
+    <audio controls>
+        <source src="{{ url_for('static', filename='music/' ~ music_file) }}" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+{% endfor %}
     
     <h3>Upload a Background Image</h3>
     

@@ -1,6 +1,7 @@
 #localhost:5000/      used when wanting to ssee the website
 from flask import Flask, render_template, request
 from PIL import Image
+import os
 
 app = Flask(__name__, static_folder="static")
 
@@ -25,11 +26,18 @@ william = {
 
 comments = []
 # Load the image from the file
-
+# Load the image from the file
+def get_music_files():
+    music_folder = os.path.join(app.root_path, 'static', 'music')
+    music_files = []
+    for file in os.listdir(music_folder):
+        if file.endswith('.mp3'):
+            music_files.append(file)
+    return music_files
 
 @app.route('/')
 def index():
-    return render_template('index.html', william=william, comments=comments)
+    return render_template('index.html', william=william, comments=comments, musics=get_music_files())
 
 
 @app.route('/profile')
